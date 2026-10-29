@@ -217,12 +217,12 @@ if pregunta:
                         "en el documento."
                     )
 
-                except Exception:
-                    logging.exception("Error al consultar el RAG de tesis")
-                    respuesta = (
-                        "Ocurrio un error al consultar el documento. "
-                        "Intenta nuevamente."
-                    )
+            except Exception:
+                logging.exception("Error al consultar el RAG de tesis")
+                 respuesta = (
+                    "Ocurrio un error al consultar el documento. "
+                    "Intenta nuevamente."
+                 )
 
 
         st.write(respuesta)
