@@ -1,6 +1,7 @@
 
 import streamlit as st
 import pymongo
+import logging
 from google import genai
 from google.genai import types
 
@@ -216,11 +217,13 @@ if pregunta:
                         "en el documento."
                     )
 
-            except Exception:
-                respuesta = (
-                    "Ocurrio un error al consultar el documento. "
-                    "Intenta nuevamente."
-                )
+                except Exception:
+                    logging.exception("Error al consultar el RAG de tesis")
+                    respuesta = (
+                        "Ocurrio un error al consultar el documento. "
+                        "Intenta nuevamente."
+                    )
+
 
         st.write(respuesta)
 
