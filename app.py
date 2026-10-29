@@ -178,14 +178,19 @@ for mensaje in st.session_state.historial:
                     st.write(c["texto"][:600])
                     st.divider()
 
-# Nueva pregunta
+
+# ==========================
+# NUEVA PREGUNTA
+# ==========================
+
 pregunta = st.chat_input(
     "Escribe tu pregunta sobre la tesis..."
 )
 
 if pregunta:
 
-    st.chat_message("user").write(pregunta)
+    with st.chat_message("user"):
+        st.write(pregunta)
 
     st.session_state.historial.append({
         "rol": "usuario",
@@ -197,7 +202,6 @@ if pregunta:
     with st.chat_message("assistant"):
 
         with st.spinner("Analizando el documento..."):
-
             try:
                 embedding = crear_embedding(pregunta)
 
@@ -218,25 +222,24 @@ if pregunta:
                     )
 
             except Exception:
-                logging.exception("Error al consultar el RAG de tesis")
-                 respuesta = (
+                logging.exception(
+                    "Error al consultar el RAG de tesis"
+                )
+                respuesta = (
                     "Ocurrio un error al consultar el documento. "
                     "Intenta nuevamente."
-                 )
-
+                )
 
         st.write(respuesta)
 
         if similares:
             with st.expander("Fragmentos recuperados"):
                 for i, c in enumerate(similares, 1):
-
                     st.markdown(
                         f"**Fragmento {i}** "
                         f"(ID: {c['id']}) "
                         f"— score: `{c['score']:.4f}`"
                     )
-
                     st.write(c["texto"][:600])
                     st.divider()
 
